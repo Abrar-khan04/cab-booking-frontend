@@ -1,11 +1,12 @@
 import { useUser } from '@clerk/clerk-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getUserRides } from '../services/api'
 import BottomNav from '../components/BottomNav'
 
 export default function RideHistory() {
     const { user } = useUser()
+    const navigate = useNavigate()
     const [rides, setRides] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -92,7 +93,7 @@ export default function RideHistory() {
                                     {ride.distance && <span>📏 {ride.distance} km</span>}
                                     <span>📅 {new Date(ride.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                                     {ride.status === 'completed' && (
-                                        <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = `/receipt/${ride.id}` }} className="ml-auto text-amber-400 font-semibold hover:underline cursor-pointer">
+                                        <span onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate(`/receipt/${ride.id}`) }} className="ml-auto text-amber-400 font-semibold hover:underline cursor-pointer">
                                             🧾 Receipt
                                         </span>
                                     )}
