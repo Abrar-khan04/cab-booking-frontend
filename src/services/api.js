@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api"
+const API_URL = import.meta.env.VITE_BACKEND_URL ? `${import.meta.env.VITE_BACKEND_URL}/api` : "http://localhost:5000/api"
+const SOCKET_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
 
 async function fetchAPI(endpoint, options = {}) {
     const token = await window.Clerk?.session?.getToken()
